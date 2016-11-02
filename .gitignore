@@ -1,0 +1,12 @@
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/.history
+/RUNNING_PID
+/bin/
+/mongodb/mongodb.log
+/mongodb/data

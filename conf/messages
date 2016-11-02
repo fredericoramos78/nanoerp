@@ -1,0 +1,8 @@
+
+menu.po=Purchase orders 
+menu.po.list=Opened
+menu.po.list=New
+menu.pa=Register Pay. Auth.
+menu.invoice=Invoices
+menu.invoice.list=List all
+menu.invoice.new=New

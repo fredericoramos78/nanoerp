@@ -1,0 +1,53 @@
+@(webJarAssets: WebJarAssets)
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/"/>
+    <title>mERP</title>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+     <!--[if lte IE 8]>
+     <script>window.location = "controllers.routes.Index.browserNotSupported()";</script>
+     <![endif]-->
+        
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="@routes.WebJarAssets.at(webJarAssets.locate("angular-material.css"))"/>
+
+    <!-- Custom CSS -->
+    
+    <!--[if lte IE 9]>
+        <script src="@routes.Assets.versioned("lib/html5shiv/html5shiv.min.js")"></script>
+    <![endif]-->
+    
+    <!-- loading localized bundling messages -->
+    <script src="@merp.controllers.routes.IndexController.jsMessages()"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.versioned("lib/requirejs/require.js")" data-main="@routes.Assets.versioned("javascripts/main.js")"></script>
+</head>
+
+<body layout="row" ng-cloak>
+	@sidemenu()
+
+    <div layout="column" flex>
+        <md-toolbar class="md-primary title-bar" md-whiteframe="2">
+            <h2 class="md-toolbar-tools">
+                <span flex>{{pageTitle}}</span>
+            </h2>
+        </md-toolbar>
+        <md-content layout="column" md-scroll-y layout-margin>
+            <div flex="noshrink" ui-view></div>
+        </md-content>
+    </div>
+</body>
+
+</html>
