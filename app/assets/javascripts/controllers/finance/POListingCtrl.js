@@ -1,11 +1,9 @@
-define(['angular', 'angular-material'], function(angular) {
+define(['angular'], function(angular) {
     'use strict';
     
     return ['$scope', function($scope) {
     
-        $scope.openSortOptions = function($mdOpenMenu, ev) {
-            //originatorEv = ev;
-            $mdOpenMenu(ev);
+        $scope.openSortOptions = function() {
         };
     }];
 });

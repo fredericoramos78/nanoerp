@@ -5,7 +5,7 @@ import com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys
 val conf = ConfigFactory.parseFile(new File("conf/application.conf")).resolve()
 
 
-name := """mERP"""
+name := """nanoERP"""
 organization in ThisBuild := "br.com.homeoffice"
 version := conf.getString("app.version")
 
@@ -40,18 +40,21 @@ libraryDependencies ++= Seq(
   ws,
   evolutions,
   filters,
-
   // WebJars
   "org.webjars" %% "webjars-play" % "2.5.+",
+  "org.webjars" % "jquery" % "2.+" intransitive(),     // jQuery's bower/npm release includes the 'src' folder, which has some invalid files for UglifyJS2
   "org.webjars" % "requirejs" % "2.1.+",
+  "org.webjars" % "requirejs-domready" % "2.+" intransitive(),
   "org.webjars" % "font-awesome" % "4.+" intransitive(),
+  "org.webjars" % "bootstrap" % "3.+" intransitive(),
   "org.webjars" % "angularjs" % "1.4.+",
   "org.webjars.bower" % "angular-ui-router" % "0.+" intransitive(),
   "org.webjars" % "momentjs" % "2.+" intransitive(),
   "org.webjars" % "modernizr" % "2.8.3",
-  "org.webjars" % "requirejs-domready" % "2.+" intransitive(),
-  "org.webjars" % "angular-material" % "1.+" intransitive(),
   "org.webjars.bower" % "satellizer" % "0.+" intransitive(),
+  "org.webjars.bower" % "angular-bootstrap" % "1.+" intransitive(),
+  "org.webjars.bower" % "angular-toastr" % "1.+" intransitive(),  
+  "org.webjars" % "metisMenu" % "2.5.+",
   //
   "org.julienrf" %% "play-jsmessages" % "2.0.0",
   "net.codingwell" %% "scala-guice" % "4.+",
@@ -79,6 +82,10 @@ EclipseKeys.withSource := true
 LessKeys.cleancss in Assets := true
 LessKeys.compress in Assets := true
 
+includeFilter in (Assets, LessKeys.less) := "*.less"
+excludeFilter in (Assets, LessKeys.less) := "_*.less"
+
+
 pipelineStages := Seq(rjs, digest, gzip)
 
 // RequireJS with sbt-rjs (https://github.com/sbt/sbt-rjs#sbt-rjs)
@@ -91,5 +98,3 @@ RjsKeys.mainModule := "main"
 
 // Use NodeJS to process javascript files
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
-
-//includeFilter in (Assets, LessKeys.less) := "*.less"

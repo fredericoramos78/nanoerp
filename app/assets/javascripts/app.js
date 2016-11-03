@@ -1,7 +1,7 @@
 define(['jquery', 'angular', 'angular-ui-router', 'angular-animate', 'jsRoutes', 'controllers'], function($, angular, moment, jsRoutes) {
     'use strict';
 
-    var app = angular.module('app', [ 'ui.router', 'ngAnimate', 'ngAria', 'ngSanitize', 'ngMaterial', 'ngAnimate', 'controllers' ]);
+    var app = angular.module('app', [ 'ui.router', 'ngAnimate', 'ngAria', 'ngSanitize', 'ui.bootstrap', 'toastr', 'ngAnimate', 'controllers' ]);
 
     /**
      * Angular configurations
@@ -47,15 +47,11 @@ define(['jquery', 'angular', 'angular-ui-router', 'angular-animate', 'jsRoutes',
         $animateProvider.classNameFilter(/^((?!(fa-spin)).)*$/);
     }]);
 
-    // Angular material theme
-    app.config(['$mdThemingProvider', function($mdThemingProvider) {
-        $mdThemingProvider
-            .theme('default')
-            .primaryPalette('blue')
-            .accentPalette('deep-orange')
-            .warnPalette('red')
-            .backgroundPalette('grey');
+    // Toastr default settings.
+    app.config(['toastrConfig', function(toastrConfig) {
+        angular.extend(toastrConfig, { timeOut: 3500 });
     }]);
+    
     /**
      * Angular initialization code
      */

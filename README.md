@@ -1,3 +1,3 @@
-# Getting started with Play (Scala)
+# nanoERP - My test project for AngularMaterial
 
-This project demonstrate how to create a simple CRUD application with Play.
+This project demonstrate how to use AngularMaterial.

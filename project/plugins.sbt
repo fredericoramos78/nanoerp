@@ -3,7 +3,6 @@ logLevel := Level.Info
 
 // Repositories
 resolvers += Resolver.mavenLocal
-resolvers += "Auster Artifactory" at "http://artifactory.auster.local:8081/artifactory/ivy-all"
 
 // The Play plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.9")

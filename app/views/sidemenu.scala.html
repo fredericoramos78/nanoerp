@@ -1,53 +1,31 @@
 @()
 
 
-<md-side-nav class="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" ng-controller="MenuCtrl">
-    <md-toolbar md-whiteframe="2">
-        <img src="@routes.Assets.versioned("images/menu-logo.jpg")" width="100%" height="100%"/>
-    </md-toolbar>
-    <md-content>
-        <md-list>
-        	<md-subheader class="md-no-sticky">Catalog</md-subheader>
-            <md-list-item ui-sref="customerListing" ui-sref-active="active">Customers</md-list-item>
-             <md-divider></md-divider>
-             <md-subheader class="md-no-sticky">Finance</md-subheader>
-            <md-list-item ui-sref="POListing" ui-sref-active="active">Purchase orders</md-list-item>
-            <md-list-item ui-sref="paymentListing" ui-sref-active="active">Payment Auth.</md-list-item>
-            <md-list-item ui-sref="invoiceListing" ui-sref-active="active">Invoices</md-list-item>
-        </md-list>
-    </md-content>
-</md-side-nav>
-
-<!-- 
-<div class="collapse navbar-collapse navbar-ex1-collapse" >
-    <ul class="nav navbar-nav side-nav">
-        <li>
-            <a class="side-nav-menu" href="javascript:;" data-toggle="collapse" data-target="#crm">
-                <i class="fa fa-fw fa-book"></i> Catalog <i class="fa fa-fw fa-caret-down"></i>
-            </a>
-            <ul id="crm" class="collapse">
-                <li>
-                    <a href="#" ng-click="gotoCustomers()"><i class="fa fa-fw fa-user"></i> Customers</a>
-                </li>
-            </ul>
-        </li>
-        
-        <li>
-            <a class="side-nav-menu" href="javascript:;" data-toggle="collapse" data-target="#finance">
-                <i class="fa fa-fw fa-money"></i> Finance <i class="fa fa-fw fa-caret-down"></i>
-            </a>
-            <ul id="finance" class="collapse">
-                <li>
-                    <a href="#" class="side-nav-menu" ng-click="gotoPOs()"><i class="fa fa-fw fa-shopping-cart"></i> Purchase orders</a>
-                </li>
-                <li>
-                    <a href="#" class="side-nav-menu" ng-click="gotoPayments()"><i class="fa fa-fw fa-credit-card-alt"></i> Payment Auth.</a>
-                </li>
-                <li>
-                    <a href="#" class="side-nav-menu" ng-click="gotoInvoices()"><i class="fa fa-fw fa-barcode"></i> Invoices</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+<div class="navbar-default sidebar" role="navigation" ng-controller="MenuCtrl">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li>
+                <a href="#">Catálogo<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#" ng-click="gotoCustomers()"><i class="fa fa-fw fa-user"></i> Clientes</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Financeiro<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#" ng-click="gotoPOs()"><i class="fa fa-fw fa-shopping-cart"></i> Purchase orders</a>
+                    </li>
+                    <li>
+                        <a href="#" ng-click="gotoPayments()"><i class="fa fa-fw fa-credit-card-alt"></i> Payment Auth.</a>
+                    </li>
+                    <li>
+                        <a href="#" ng-click="gotoInvoices()"><i class="fa fa-fw fa-barcode"></i> Invoices</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
- -->

@@ -18,7 +18,7 @@
             },
             'modernizr': { deps: [], exports: 'Modernizr' },
 //            'moment-pt-br': ['moment'],
-//            'bootstrap': ['jquery'],
+            'bootstrap': ['jquery'],
             'angular': {
                 deps: ['jquery'],
                 exports: 'angular'
@@ -31,17 +31,9 @@
             'angular-aria': ['angular'],
             'angular-sanitize': ['angular'],
             'angular-ui-router': ['angular'],
-            'angular-material': ['angular', 'angular-animate', 'angular-aria', 'angular-messages', 'angular-sanitize'],
-//            'angular-ui-select': ['angular'],
-//            'angular-toastr': ['angular'],
-//            'angular-loading-bar': ['angular'],
-//            'satellizer': ['angular'],
-//            'Highcharts': {
-//                deps: ['jquery'],
-//                exports: 'Highcharts'
-//            },
-//            'highcharts-more': ['Highcharts'],
-//            'highcharts-gauge': ['Highcharts', 'highcharts-more']
+            'angular-ui-bootstrap': ['angular'],
+            'angular-toastr': ['angular'],
+            'metis-menu': ['bootstrap'],
         },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
@@ -49,7 +41,7 @@
 //            'moment': ['../lib/momentjs/moment'],//, '../lib/momentjs/locale/pt-br'],
 //            'moment-pt-br': ['../lib/momentjs/locale/pt-br'],
             'jquery': ['../lib/jquery/jquery'],
-//            'bootstrap': ['../lib/bootstrap/js/bootstrap'],
+            'bootstrap': ['../lib/bootstrap/js/bootstrap'],
             'angular': ['../lib/angularjs/angular'],
             'angular-pt-br': ['../lib/angularjs/i18n/angular-locale_pt-br'],
             'angular-route': ['../lib/angularjs/angular-route'],
@@ -59,16 +51,10 @@
             'angular-aria': ['../lib/angularjs/angular-aria'],
             'angular-sanitize': ['../lib/angularjs/angular-sanitize'],
             'angular-ui-router': ['../lib/angular-ui-router/release/angular-ui-router'],
-            'angular-material': ['../lib/angular-material/angular-material'],
             'domReady': ['../lib/requirejs-domready/domReady'],
-//            'angular-ui-bootstrap': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls'],
-//            'angular-ui-bootstrap': ['../lib/angular-ui-bootstrap/ui-bootstrap']
-//            'angular-ui-select': ['../lib/angular-ui-select/dist/select'],
-//            'angular-toastr': ['../lib/angular-toastr/dist/angular-toastr.tpls'],
-//            'angular-loading-bar': ['../lib/angular-loading-bar/build/loading-bar'],
-//            'Highcharts': ['../lib/highcharts/highcharts'],
-//            'highcharts-more': ['../lib/highcharts/highcharts-more'],
-//            'highcharts-gauge': ['../lib/highcharts/modules/solid-gauge'],
+            'angular-ui-bootstrap': ['../lib/angular-bootstrap/ui-bootstrap-tpls'],
+            'angular-toastr': ['../lib/angular-toastr/dist/angular-toastr.tpls'],
+            'metis-menu': ['../lib/metisMenu/metisMenu'],
             'jsRoutes': ['/jsroutes']
         }
     });
@@ -92,8 +78,13 @@
         window.moment = moment;
         moment.locale('pt-BR');
     });
+    
+    require(['metis-menu'], function(moment) {
+        $('#side-menu').metisMenu();
+    });
 
-    require(['angular', 'moment', 'angular-animate', 'angular-pt-br', 'angular-aria', 'angular-sanitize', 'angular-material', './app'],
+    require(['angular', 'moment', 'angular-animate', 'angular-pt-br', 'angular-aria', 'angular-sanitize', 
+             'metis-menu', 'angular-toastr', 'angular-ui-bootstrap', 'bootstrap', './app'],
          function(angular) {
             require(['domReady'], function(document) {
                 angular.bootstrap(document, ['app'], { strictDi: true });
