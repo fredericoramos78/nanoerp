@@ -34,6 +34,8 @@
             'angular-ui-bootstrap': ['angular'],
             'angular-toastr': ['angular'],
             'metis-menu': ['bootstrap'],
+            'datatables.net': ['bootstrap'],
+            'datatables.net-bs': ['datatables.net'],
         },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
@@ -55,6 +57,8 @@
             'angular-ui-bootstrap': ['../lib/angular-bootstrap/ui-bootstrap-tpls'],
             'angular-toastr': ['../lib/angular-toastr/dist/angular-toastr.tpls'],
             'metis-menu': ['../lib/metisMenu/metisMenu'],
+            'datatables.net': ['../lib/datatables.net/js/jquery.dataTables'],
+            'datatables.net-bs': ['../lib/datatables.net-bs/js/dataTables.bootstrap'],
             'jsRoutes': ['/jsroutes']
         }
     });

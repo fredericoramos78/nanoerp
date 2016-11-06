@@ -13,7 +13,9 @@ import org.webjars.play.RequireJS
 
 import merp.controllers.api.utils.Paginator
 import merp.business.catalog.CustomerService
+import merp.model.catalog._
 import merp.business.utils.ExecutionContexts
+import merp.controllers.api.utils.DatatablesPost
 import merp.utils.AsyncEnabled
 
 
@@ -22,17 +24,16 @@ class CustomerController @Inject() (webJarAssets: WebJarAssets, requireJS: Requi
     extends AsyncEnabled(ec) with Controller with I18nSupport { 
   
     implicit val threadpool = ec.services
-  
-    case class ListFilter(filterBy: String, offset: Int, pageSize: Int) extends Paginator(offset, pageSize)
-    implicit val LISTFILTER_READER = Json.reads[ListFilter]
     
     def list = Action.async(parse.json) { request =>
-        request.body.validate[ListFilter].map { form =>
-            customerService.listByFilter(form.filterBy, form.offset, form.pageSize) map { case result =>
-                Results.Ok(Json.obj("result" -> result.toSeq))
-            } recover {
-                case ex: Exception => BadRequest(ex.toString()) 
-            }
+        request.body.validate[DatatablesPost].map { form =>
+            for ( total <- customerService.countByFilter(None);
+                  selected <- customerService.countByFilter(None);
+                  data <- customerService.listByFilter(None, form.start, form.length)
+                ) yield {
+                    var dataAsJson = Json.toJson(data.toList)(Customer.JSON_LIST_FORMATTER)
+                    Results.Ok( DatatablesPost.prepareResponse(form.draw, total, selected, dataAsJson) )
+                }
         } recoverTotal { case error => Future.successful(BadRequest(error.toString())) }
     }
 }
