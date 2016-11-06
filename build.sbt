@@ -55,6 +55,8 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "angular-bootstrap" % "1.+" intransitive(),
   "org.webjars.bower" % "angular-toastr" % "1.+" intransitive(),  
   "org.webjars" % "metisMenu" % "2.5.+",
+  "org.webjars.bower" % "datatables.net" % "1.10.+",
+  "org.webjars.bower" % "datatables.net-bs" % "1.10.+",
   //
   "org.julienrf" %% "play-jsmessages" % "2.0.0",
   "net.codingwell" %% "scala-guice" % "4.+",
