@@ -8,4 +8,4 @@ object Customer {
   
 }
 
-case class Customer(id: Long, name: String, taxId: String, address: Address)
+case class Customer(_id: Option[String] = None, name: String, taxId: String, address: Option[Address] = None)

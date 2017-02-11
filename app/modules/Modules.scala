@@ -16,7 +16,7 @@ class UtilitiesModule extends AbstractModule with ScalaModule {
 
 class ServicesModule extends AbstractModule with ScalaModule {
     override def configure = {
-        bind[CustomerService].to[CustomerServiceImpl]
+        bind[CustomerService].to[BaseCustomerServiceImpl]
         ()
     }
 }

@@ -1,59 +1,112 @@
-define(['angular', 'jquery', 'jsRoutes'], function(angular, jquery, jsRoutes) {
+define(['angular', 'ngTable', 'jsRoutes'], function(angular, ngTable, jsRoutes) {
     'use strict';
     
     
-    return ['$scope', '$http', function($scope, $http) {
+    return ['$scope', '$http', '$uibModal', 'NgTableParams', function($scope, $http, $uibModal, NgTableParams) {
         
-        $scope.title = "Customers";
-        $scope.tableOptions = null;
+        $scope.errorLoading = false;
+        $scope.errorMessage = null;
         
-        $scope.init = function() {
-            if ($scope.tableOptions === null) {
-                $scope.tableOptions = {
-                    destroy: true,
-                    searching: false,
-                    serverSide: true,
-                    ajax: function(data, callback, settings) {
-                        console.log(data);
-                        $http.post(jsRoutes.merp.controllers.api.catalog.CustomerController.list().url, angular.toJson(data))
-                            .success(function(response) { callback(response); });
-                    },
-                    pagingType: "simple_numbers",
-                    "order": [],
-                    columnDefs: [ { title: "#", data: "id", orderable: false, targets: 0 }, 
-                                  { title: "Nome", data: "name", orderable: true, targets: 1 },
-                                  { title: "CPF/CNPJ", data: "taxId", orderable: true, targets: 2 },
-                                  { title: "Endereço", data: "address.toString", orderable: false, targets: 3 }],
-                    language: {
-                        "decimal":        ",",
-                        "emptyTable":     "Não existem linhas para serem exibidas.",
-                        "info":           "Vendo registros _START_ a _END_ de um total de _TOTAL_",
-                        "infoEmpty":      "",
-                        "infoFiltered":   "(filtered from _MAX_ total entries)",
-                        "infoPostFix":    "",
-                        "thousands":      ".",
-                        "lengthMenu":     "Mostrar _MENU_ linhas por página",
-                        "loadingRecords": "carregando...",
-                        "processing":     "processando...",
-                        "search":         "Search:",
-                        "zeroRecords":    "Não foram encontradas linhas.",
-                        "paginate": {
-                            "first":      "Primeiro",
-                            "last":       "Último",
-                            "next":       "Próximo",
-                            "previous":   "Anterior"
-                        },
-                        "aria": {
-                            "sortAscending":  ": ordena a coluna de forma ascendente",
-                            "sortDescending": ": ordena a coluna de forma descendente"
-                        }
-                    }
-                };
-                // init the datatable element
-                jquery("#datatable").dataTable($scope.tableOptions);
-            }
+        $scope.form = { filterBy: null };
+        
+        
+        $scope.addCustomer = function() {
+            $scope.openModal(null);
         };
         
+        $scope.editCustomer = function(customerId) {
+            $http.post(jsRoutes.merp.controllers.api.catalog.CustomerController.loadCustomer(customerId).url)
+                .then(function(result) {
+                    $scope.openModal(result.data);
+                }, function(error) { 
+                    $scope.errorLoading = true;
+                    $scope.errorMessage = error;
+                });
+            
+        };
+        
+        $scope.openModal = function(customerInfo) {
+            var modalOptions = { 
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'addEditModal.html',
+                    controller: 'CustomerModalCtrl',
+                    scope: $scope,
+                    resolve: {
+                        customer: function() { return customerInfo; }
+                    }
+                };
+                $scope.resetError();
+                $uibModal.open(modalOptions)
+                    .result
+                    .then(function(customerInfo) { 
+                          if (customerInfo !== undefined) {
+                              var actionUrl = jsRoutes.merp.controllers.api.catalog.CustomerController.newCustomer().url;
+                              if (customerInfo._id !== undefined) {
+                                  actionUrl = jsRoutes.merp.controllers.api.catalog.CustomerController.editCustomer().url;
+                              }
+                              $http.post(actionUrl, angular.toJson(customerInfo))
+                                  .then(function(result) { $scope.tableOptions.reload(); })
+                                  .catch(function(error) { 
+                                            $scope.errorMessage = error.data;
+                                            $scope.errorLoading = true;
+                                            $scope.tableOptions.reload(); 
+                                        }
+                                  );
+                          }
+                    });
+        };
+        
+        $scope.resetError = function() {
+            $scope.errorLoading = false;
+            $scope.errorMessage = null;
+        };
+        
+        $scope.filter = function() {
+            $scope.updateTable();
+        };
+        
+        $scope.clearFilter = function() {
+            $scope.form.filterBy = null;
+            $scope.updateTable();
+        };
+
+        $scope.reloadTable = function() {
+            $scope.errorMessage = error;
+            $scope.errorLoading = true;
+            $scope.tableOptions.reload(); 
+        };
+        
+        $scope.updateTable = function() {
+            $scope.resetError();
+            
+            var tableInitParams = { count: 25, };
+            var tableInitValues = {
+                counts: [25, 50, 100],
+                getData: function(params) {
+                    var initParams = { offset: (params.page()-1)*params.count(), length: params.count() };
+                    if ($scope.form.filterBy !== null) {
+                        initParams.search = { value: $scope.form.filterBy };
+                    }
+                    return $http.post(jsRoutes.merp.controllers.api.catalog.CustomerController.list().url, angular.toJson(initParams))
+                        .then(function(result) {
+                            params.total(result.data.recordsFiltered);
+                            return result.data.data;
+                        })
+                        .catch(function(error) { 
+                            $scope.errorMessage = error.data;
+                            $scope.errorLoading = true;
+                            $scope.tableOptions.reload(); 
+                        });
+                  }
+            };
+            $scope.tableOptions = new NgTableParams(tableInitParams, tableInitValues);
+        };
+
+        
+        $scope.init = function() {
+            $scope.updateTable();
+        };
         $scope.init();
     }];
 });

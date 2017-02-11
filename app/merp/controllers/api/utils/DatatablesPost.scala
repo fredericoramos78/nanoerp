@@ -3,16 +3,16 @@ package merp.controllers.api.utils
 
 import play.api.libs.json._
 
-
-case class DatatablesPost(draw: Int, start: Int, length: Int)
+case class SearchFilter(value: Option[String] = None)
+case class DatatablesPost(offset: Int = 0, length: Int = 25, order: Option[Seq[Sorting]] = None, search: Option[SearchFilter] = None)
 
 object DatatablesPost {
-    implicit val LIST_READER = Json.reads[DatatablesPost]
+    implicit val SEARCH_READER = Json.reads[SearchFilter]
+    implicit val DATATABLES_READER = Json.reads[DatatablesPost]
     
     
-    def prepareResponse(draw: Int, total: Int, selected: Int, data: JsValue): JsValue =
-        Json.obj("draw" -> draw,
-                 "recordsTotal" -> total,
+    def prepareResponse(total: Int, selected: Int, data: JsValue): JsValue =
+        Json.obj("recordsTotal" -> total,
                  "recordsFiltered" -> selected,
                  "data" -> data)
 }

@@ -1,7 +1,7 @@
-define(['jquery', 'angular', 'datatables.net', 'datatables.net-bs', 'angular-ui-router', 'angular-animate', 'jsRoutes', 'controllers'], function($, angular, moment, jsRoutes) {
+define(['jquery', 'angular', 'ngTable', 'angular-ui-router', 'angular-animate', 'jsRoutes', 'controllers'], function($, angular, moment, jsRoutes) {
     'use strict';
 
-    var app = angular.module('app', [ 'ui.router', 'ngAnimate', 'ngAria', 'ngSanitize', 'ui.bootstrap', 'toastr', 'ngAnimate', 'controllers' ]);
+    var app = angular.module('app', [ 'ui.router', 'ngAnimate', 'ngAria', 'ngSanitize', 'ui.bootstrap', 'toastr', 'ngAnimate', 'ngTable', 'controllers' ]);
 
     /**
      * Angular configurations

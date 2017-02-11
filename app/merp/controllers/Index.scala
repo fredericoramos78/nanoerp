@@ -7,12 +7,11 @@ import play.api.i18n._
 import play.api.routing._
 
 import org.webjars.play.RequireJS
-import jsmessages.JsMessagesFactory
 import controllers.WebJarAssets
 
 
 @Singleton
-class IndexController @Inject() (webJarAssets: WebJarAssets, val messagesApi: MessagesApi, jsMessagesFactory: JsMessagesFactory) 
+class IndexController @Inject() (webJarAssets: WebJarAssets, val messagesApi: MessagesApi) 
     extends Controller with I18nSupport {
 
     
@@ -24,12 +23,6 @@ class IndexController @Inject() (webJarAssets: WebJarAssets, val messagesApi: Me
         Ok(views.html.skel(webJarAssets))
     }
         
-    def jsMessages = Action { 
-      val jsMessages = jsMessagesFactory.all
-      Ok(jsMessages(Some("window.Messages")))
-    }
-    
-    
    /**
      * Retrieves all routes via reflection.
      * http://stackoverflow.com/questions/12012703/less-verbose-way-of-generating-play-2s-javascript-router
@@ -61,6 +54,8 @@ class IndexController @Inject() (webJarAssets: WebJarAssets, val messagesApi: Me
             Ok(JavaScriptReverseRouter(varName)(routeCache: _*)).as(JAVASCRIPT)
         }
     }    
+    
+    
     
     
     //

@@ -4,14 +4,16 @@
 
 # Home page
 #GET     /                                    merp.controllers.IndexController.websiteIndex
-GET     /jsroutes.js                     	  merp.controllers.IndexController.jsRoutes()
-GET     /_messages                            merp.controllers.IndexController.jsMessages
+GET     /jsroutes.js                          merp.controllers.IndexController.jsRoutes()
 
 GET     /                                     merp.controllers.IndexController.index
 #GET     /views/home/landing.html             merp.controllers.IndexController.homeLanding
 #GET     /views/customers/listing.html        merp.controllers.IndexController.customerListing
 
 POST    /api/customers/list.json              merp.controllers.api.catalog.CustomerController.list
+POST    /api/customers/new.json               merp.controllers.api.catalog.CustomerController.newCustomer
+POST    /api/customers/edit.json              merp.controllers.api.catalog.CustomerController.editCustomer
+POST    /api/customers/:id/load.json              merp.controllers.api.catalog.CustomerController.loadCustomer(id: String)
 
 GET     /views/$template<.+>.html             merp.controllers.IndexController.displayView(template)
 

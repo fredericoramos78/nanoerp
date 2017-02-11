@@ -34,8 +34,7 @@
             'angular-ui-bootstrap': ['angular'],
             'angular-toastr': ['angular'],
             'metis-menu': ['bootstrap'],
-            'datatables.net': ['bootstrap'],
-            'datatables.net-bs': ['datatables.net'],
+            'ngTable': ['angular']
         },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
@@ -57,9 +56,8 @@
             'angular-ui-bootstrap': ['../lib/angular-bootstrap/ui-bootstrap-tpls'],
             'angular-toastr': ['../lib/angular-toastr/dist/angular-toastr.tpls'],
             'metis-menu': ['../lib/metisMenu/metisMenu'],
-            'datatables.net': ['../lib/datatables.net/js/jquery.dataTables'],
-            'datatables.net-bs': ['../lib/datatables.net-bs/js/dataTables.bootstrap'],
-            'jsRoutes': ['/jsroutes']
+            'jsRoutes': ['/jsroutes'],
+            'ngTable': ['../lib/ng-table/dist/ng-table']
         }
     });
 
@@ -87,8 +85,8 @@
         $('#side-menu').metisMenu();
     });
 
-    require(['angular', 'moment', 'angular-animate', 'angular-pt-br', 'angular-aria', 'angular-sanitize', 
-             'metis-menu', 'angular-toastr', 'angular-ui-bootstrap', 'bootstrap', './app'],
+    require(['angular', 'moment', 'angular-animate', 'angular-pt-br', 'angular-aria', 'angular-sanitize', 'metis-menu',
+             'angular-ui-bootstrap', 'bootstrap', 'angular-toastr', './app'],
          function(angular) {
             require(['domReady'], function(document) {
                 angular.bootstrap(document, ['app'], { strictDi: true });
