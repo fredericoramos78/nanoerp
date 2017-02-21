@@ -25,6 +25,8 @@ forms.cancel=Cancel
 errors.numbersOnly=Accepts numbers only.
 errors.minlength=Expected at least {0} chars.
 
+list.norows=No rows found.
+
 
 #############################
 # Catalog -> Customers

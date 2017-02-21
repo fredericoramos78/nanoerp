@@ -25,7 +25,7 @@ class DummyCustomerRepository @Inject() (ec: ExecutionContexts) extends AsyncEna
            myCustomers.filter(p => !criteria.isDefined || (p.name.toUpperCase().indexOf(criteria.get.toUpperCase()) >= 0))
     }
     
-    override def countBy(criteria: Option[String]): Future[Int] = this.selectBy(criteria, 0, 1000).map(customerList => customerList.size) 
+    override def countBy(criteria: Option[String]): Future[Long] = this.selectBy(criteria, 0, 1000).map(customerList => customerList.size) 
     
     override def insert(customer: Customer): Future[String] = Future {
         var id = (myCustomers.length+1).toString

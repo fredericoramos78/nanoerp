@@ -25,6 +25,8 @@ forms.cancel=Cancelar
 errors.numbersOnly=Digitar apenas números.
 errors.minlength=O campo deve ter pelo menos {0} caracteres.
 
+list.norows=Nenhum registro encontrado.
+
 
 #############################
 # Catalog -> Customers

@@ -11,7 +11,7 @@ import merp.utils.TaxIdHelper
 trait CustomerService {
     
     def listByFilter(criteria: Option[String] = None, offset: Int, length: Int): Future[Iterable[Customer]]
-    def countByFilter(criteria: Option[String] = None): Future[Int] 
+    def countByFilter(criteria: Option[String] = None): Future[Long] 
     
     def create(customer: Customer): Future[String]
     def modify(customer: Customer): Future[String]
@@ -25,7 +25,7 @@ trait CustomerService {
 trait CustomerRepository {
   
     def selectBy(criteria: Option[String], offset: Int, length: Int): Future[Iterable[Customer]]
-    def countBy(criteria: Option[String]): Future[Int]
+    def countBy(criteria: Option[String]): Future[Long]
     
     def insert(customer: Customer): Future[String]
     def update(customer: Customer): Future[String]

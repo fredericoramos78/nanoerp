@@ -15,12 +15,14 @@ define(['angular', 'ngTable', 'jsRoutes'], function(angular, ngTable, jsRoutes) 
         };
         
         $scope.editCustomer = function(customerId) {
-            $http.post(jsRoutes.merp.controllers.api.catalog.CustomerController.loadCustomer(customerId).url)
+            var formData = { _id: customerId };
+            $http.post(jsRoutes.merp.controllers.api.catalog.CustomerController.loadCustomer(customerId).url, angular.toJson(formData))
                 .then(function(result) {
                     $scope.openModal(result.data);
-                }, function(error) { 
+                })
+                .catch(function(error) { 
                     $scope.errorLoading = true;
-                    $scope.errorMessage = error;
+                    $scope.errorMessage = error.data;
                 });
             
         };

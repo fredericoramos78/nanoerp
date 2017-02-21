@@ -13,17 +13,20 @@ import org.webjars.play.RequireJS
 
 import merp.controllers.api.utils.Paginator
 import merp.business.catalog.CustomerService
+import merp.business.catalog.BusinessException
 import merp.model.catalog._
 import merp.business.utils.ExecutionContexts
 import merp.controllers.api.utils.DatatablesPost
-import merp.utils.AsyncEnabled
-import merp.business.catalog.BusinessException
+import merp.utils._
 
 
 class CustomerController @Inject() (webJarAssets: WebJarAssets, requireJS: RequireJS, val messagesApi: MessagesApi, 
                                     jsMessagesFactory: JsMessagesFactory, customerService: CustomerService, ec: ExecutionContexts) 
-    extends AsyncEnabled(ec) with Controller with I18nSupport { 
+    extends AsyncEnabled(ec) with Controller with MERPLogger with I18nSupport { 
   
+    import Customer._
+    
+    
     implicit val threadpool = ec.services
     
     def list = Action.async(parse.json) { request =>
@@ -41,10 +44,11 @@ class CustomerController @Inject() (webJarAssets: WebJarAssets, requireJS: Requi
     
     def newCustomer = Action.async(parse.json) { request =>
         request.body.validate[Customer].map { form =>
-            customerService.create(form) map { _id => 
+            LOGGER.info(form.toString)
+            customerService.create(form) map { _id =>
                 Results.Ok( _id )
             } recover { 
-                case ex: BusinessException => BadRequest(ex.message)
+                case ex: Throwable => this.handleControllerException(ex)
             }
         } recoverTotal { case error => Future.successful(BadRequest(error.toString())) }
         
@@ -54,14 +58,18 @@ class CustomerController @Inject() (webJarAssets: WebJarAssets, requireJS: Requi
         request.body.validate[Customer].map { form =>
             customerService.modify(form) map { _id => 
                 Results.Ok( _id )
+            } recover { 
+                case ex: Throwable => this.handleControllerException(ex)
             }
         } recoverTotal { case error => Future.successful(BadRequest(error.toString())) }
         
     }
     
-    def loadCustomer(id: String) = Action.async { request =>
+    def loadCustomer(id: String) = Action.async(parse.json) { request =>
         customerService.findById(id) map { customerInfo =>
-            customerInfo.map { info => Results.Ok(Json.toJson(info)) } getOrElse { Results.BadRequest("") }
+            customerInfo.map { info => Results.Ok(Json.toJson(info)) } getOrElse { Results.BadRequest(messagesApi("cat.customers.errorLoadingCustomer")) }
+        } recover { 
+            case ex: Throwable => this.handleControllerException(ex)
         }
     }
 }

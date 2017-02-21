@@ -41,6 +41,9 @@
                         <td style="width: 10%;" data-title="'@{messages("cat.customers.list.taxId.title")}'" sortable="'taxId'">{{eachCustomer.taxId}}</td>
                         <td data-title="'Endereço'" sortable="'@{messages("cat.customers.list.address.title")}'"></td>
                     </tr>
+                    <tr ng-if="$data.length === 0">
+                        <td colspan="4">@{messages("list.norows")}</td>
+                    </tr>
                 </table>
             </div>
             <!-- /.table-responsive -->

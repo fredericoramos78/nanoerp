@@ -11,7 +11,7 @@ object DatatablesPost {
     implicit val DATATABLES_READER = Json.reads[DatatablesPost]
     
     
-    def prepareResponse(total: Int, selected: Int, data: JsValue): JsValue =
+    def prepareResponse(total: Long, selected: Long, data: JsValue): JsValue =
         Json.obj("recordsTotal" -> total,
                  "recordsFiltered" -> selected,
                  "data" -> data)

@@ -20,7 +20,9 @@ object Address {
         
     def jsonUnapply(x: Address): Option[(String, String, String, String, String, String, String)] =
         Some( (x.street, x.number, x.complement, x.city, x.state, x.country, x.toString()) )
-
+        
+        
+    implicit val JSON_OPTION_FORMATTER: Format[Option[Address]] = Format.optionWithNull(JSON_FORMATTER)
 }
 
 case class Address(street: String, number: String, complement: String, city: String, state: String, country: String) {

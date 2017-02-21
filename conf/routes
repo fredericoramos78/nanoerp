@@ -10,10 +10,13 @@ GET     /                                     merp.controllers.IndexController.i
 #GET     /views/home/landing.html             merp.controllers.IndexController.homeLanding
 #GET     /views/customers/listing.html        merp.controllers.IndexController.customerListing
 
+POST    /api/auth/login                       merp.controllers.api.AuthentationController.login
+POST    /api/auth/logout                      merp.controllers.api.AuthentationController.logout
+
 POST    /api/customers/list.json              merp.controllers.api.catalog.CustomerController.list
 POST    /api/customers/new.json               merp.controllers.api.catalog.CustomerController.newCustomer
 POST    /api/customers/edit.json              merp.controllers.api.catalog.CustomerController.editCustomer
-POST    /api/customers/:id/load.json              merp.controllers.api.catalog.CustomerController.loadCustomer(id: String)
+POST   /api/customers/:id/load.json          merp.controllers.api.catalog.CustomerController.loadCustomer(id: String)
 
 GET     /views/$template<.+>.html             merp.controllers.IndexController.displayView(template)
 
